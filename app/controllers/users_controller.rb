@@ -10,6 +10,7 @@ class UsersController <ApplicationController
   def create 
     user = User.create(user_params)
     if user.save
+      flash[:success] = "Welcome, #{user.name}!"
       redirect_to user_path(user)
     else  
       flash[:error] = user.errors.full_messages.to_sentence
@@ -20,6 +21,6 @@ class UsersController <ApplicationController
   private 
 
   def user_params 
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end 
 end 
