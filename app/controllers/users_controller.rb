@@ -16,11 +16,27 @@ class UsersController <ApplicationController
       flash[:error] = user.errors.full_messages.to_sentence
       redirect_to register_path
     end 
-  end 
+  end
+
+  def login_form
+  end
+
+  def login
+    user = User.find_by(name: params[:name])
+    if user&.authenticate(params[:password])
+      flash[:success] = "Welcome, #{user.name}!"
+      redirect_to root_path
+    else
+      flash[:error] = "Sorry, your credentials are bad."
+      # render :login_form
+      redirect_to login_path
+    end
+  end
 
   private 
 
   def user_params 
+    params[:email].downcase!
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end 
 end 

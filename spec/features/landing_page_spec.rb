@@ -32,6 +32,23 @@ RSpec.describe 'Landing Page' do
       expect(page).to have_content(user1.email)
       expect(page).to have_content(user2.email)
     end   
+  end
 
+  it 'allows a user to log in' do
+    user = User.create(name: 'funbucket13', email: 'funbucket13@mrbucket.com', password: 'test')
+
+    visit root_path
+
+    click_link 'Log In'
+
+    expect(current_path).to eq(login_path)
+
+    fill_in :name, with: user.name
+    fill_in :password, with: user.password
+
+    click_on 'Log In'
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("Welcome, #{user.name}!")
   end
 end
