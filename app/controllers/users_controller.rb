@@ -10,6 +10,7 @@ class UsersController <ApplicationController
   def create 
     user = User.create(user_params)
     if user.save
+      session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
       redirect_to user_path(user)
     else  
@@ -24,12 +25,18 @@ class UsersController <ApplicationController
   def login
     user = User.find_by(name: params[:name])
     if user&.authenticate(params[:password])
+      session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
       redirect_to root_path
     else
       flash.now[:error] = "Sorry, your credentials are bad."
       render :login_form
     end
+  end
+
+  def logout
+    session.delete(:user_id)
+    redirect_to root_path
   end
 
   private 
