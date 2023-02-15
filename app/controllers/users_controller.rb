@@ -1,4 +1,6 @@
 class UsersController <ApplicationController 
+  before_action :validate_user, only: :dashboard
+
   def new 
     @user = User.new()
   end 
@@ -20,6 +22,9 @@ class UsersController <ApplicationController
   end
 
   def login_form
+  end
+
+  def dashboard
   end
 
   def login
