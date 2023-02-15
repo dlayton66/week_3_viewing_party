@@ -1,11 +1,16 @@
 class MoviesController < ApplicationController
-  def index 
-    @user = User.find(params[:id])
+  before_action :validate_user, :find_user
+
+  def index
     @movies = Movie.all
   end 
 
-  def show 
-    @user = User.find(params[:user_id])
+  def show
     @movie = Movie.find(params[:id])
-  end 
+  end
+
+  private
+    def find_user
+      @user = User.find(session[:user_id])
+    end
 end 

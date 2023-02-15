@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   get '/login', to: 'users#login_form'
   post '/login', to: 'users#login'
   get '/logout', to: 'users#logout'
-  get '/dashboard', to: 'users#dashboard'
+  get '/dashboard', to: 'users#show'
 
-  get '/users/:id/movies', to: 'movies#index', as: 'movies'
-  get '/users/:user_id/movies/:id', to: 'movies#show', as: 'movie'
+  get '/movies', to: 'movies#index', as: 'movies'
+  get '/movies/:id', to: 'movies#show', as: 'movie'
 
-  resources :users, only: [:show, :create]
+  resources :users, only: [:create]
 end
